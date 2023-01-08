@@ -1,14 +1,9 @@
 import express from "express"
+import { router } from "./routes/loginRoute"
 
 const app = express()
 
-app.get("/", (req, res) => {
-  res.send(`
-    <div>
-        <h1>Hi there!</h1>
-    </div>
-  `)
-})
+app.use(router)
 
 app.listen(3000, () => {
   console.log("listening on port 3000")
