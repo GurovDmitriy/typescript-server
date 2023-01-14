@@ -13,21 +13,23 @@ class Boat {
     this.data = "boat"
   }
 
-  @logError
+  @logError({message: "init boat error"})
   init(): void {
     throw new Error("oopss")
     console.log("init boat")
   }
 }
 
-function logError(target: any, key: string, desc: PropertyDescriptor): void {
-  const method = desc.value
+function logError(props: {message: string}) {
+  return function logError(target: any, key: string, desc: PropertyDescriptor): void {
+    const method = desc.value
 
-  desc.value = function () {
-    try {
-      method()
-    } catch (err) {
-      console.log("some error handler")
+    desc.value = function () {
+      try {
+        method()
+      } catch (err) {
+        console.log(props.message)
+      }
     }
   }
 }
