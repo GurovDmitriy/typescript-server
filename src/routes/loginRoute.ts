@@ -6,6 +6,38 @@ interface RequestWithBody extends Request {
   }
 }
 
+class Boat {
+  private data: string;
+
+  constructor() {
+    this.data = "boat"
+  }
+
+  @logError
+  init(): void {
+    throw new Error("oopss")
+    console.log("init boat")
+  }
+}
+
+function logError(target: any, key: string, desc: PropertyDescriptor): void {
+  const method = desc.value
+
+  desc.value = function () {
+    try {
+      method()
+    } catch (err) {
+      console.log("some error handler")
+    }
+  }
+}
+
+const boat = new Boat()
+
+boat.init()
+
+console.log(boat)
+
 function requireAuth(req: Request, res: Response, next: NextFunction): void {
   if (req?.session?.loggedIn) {
     next()
@@ -83,7 +115,7 @@ router.get("/logout", (req, res) => {
 router.get("/protected", requireAuth, (req, res) => {
   res.send(`
     <div>
-        <div>Wilcome to protected route, logged in user</div>
+      <div>Welcome to protected route, logged in user</div>
     </div>
   `)
 })
