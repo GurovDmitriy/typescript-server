@@ -2,12 +2,6 @@ import express, { Request, Response, NextFunction } from "express"
 
 const router = express.Router()
 
-interface RequestWithBody extends Request {
-  body: {
-    [key: string]: string | undefined
-  }
-}
-
 function requireAuth(req: Request, res: Response, next: NextFunction): void {
   if (req?.session?.loggedIn) {
     next()
@@ -38,22 +32,6 @@ router.get("/", (req, res) => {
         <a href="/auth/login">Login</a>
     </div>
   `)
-  }
-})
-
-router.post("/login", (req: RequestWithBody, res) => {
-  const { email, password } = req.body
-
-  console.log(req.body)
-
-  const emailValid = email && email === "test@gmail.com"
-  const passwordValid = email && password === "12345"
-
-  if (emailValid && passwordValid) {
-    req.session = { loggedIn: true }
-    res.redirect("/")
-  } else {
-    res.send("Invalid email or password")
   }
 })
 
