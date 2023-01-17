@@ -7,13 +7,13 @@ import { NextFunction, RequestHandler, Response, Request } from "express"
 function bodyValidators(keys: string[]): RequestHandler {
   return function (req: Request, res: Response, next: NextFunction) {
     if (!req.body) {
-      res.status(422).send("invalid request")
+      res.status(422).send(`Missing property body`)
       return
     }
 
     for (const key of keys) {
       if (!req.body[key]) {
-        res.status(422).send("invalid request")
+        res.status(422).send(`Missing property ${key}`)
         return
       }
     }
