@@ -1,36 +1,61 @@
 {
-  "name": "learn-ts-server",
+  "name": "typescript-server",
   "version": "1.0.0",
+  "description": "learn typescript - build own web server",
+  "source": "src/index.html",
   "private": true,
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "start:build": "tsc -w",
-    "start:run": "nodemon build/index.js",
-    "start": "concurrently npm:start:*"
+    "start": "parcel",
+    "build": "parcel build",
+    "prepare": "husky install",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "lint:eslint": "eslint --fix --ext \".jsx,.js,.ts,.tsx\" --ignore-path .eslintignore .",
+    "lint:prettier": "prettier --write \"**/*.{jsx,js,ts,tsx,css,less,scss,html,md}\" --ignore-path .prettierignore"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.30.3",
-    "@typescript-eslint/parser": "^5.30.3",
-    "casual": "^1.6.2",
-    "eslint": "^8.19.0",
-    "eslint-config-prettier": "^8.5.0",
-    "prettier": "^2.8.2",
-    "typescript": "^4.7.4"
+    "@commitlint/cli": "^18.2.0",
+    "@commitlint/config-conventional": "^18.1.0",
+    "@parcel/config-default": "^2.10.2",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "buffer": "^6.0.3",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "husky": "^8.0.3",
+    "json-server": "^0.17.4",
+    "json-server-auth": "^2.1.0",
+    "lint-staged": "^15.0.2",
+    "parcel": "^2.10.2",
+    "prettier": "3.0.3",
+    "prettier-plugin-organize-imports": "^3.2.3",
+    "stylelint": "^15.11.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-rational-order-fix": "^0.1.9",
+    "stylelint-config-standard-scss": "^11.1.0",
+    "stylelint-order": "^6.0.3",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@types/body-parser": "^1.19.2",
-    "@types/cookie-session": "^2.0.44",
-    "@types/express": "^4.17.15",
-    "@types/node": "^18.0.3",
-    "body-parser": "^1.20.1",
-    "concurrently": "^7.2.2",
+    "@types/body-parser": "^1.19.4",
+    "@types/cookie-session": "^2.0.46",
+    "@types/express": "^4.17.20",
+    "@types/node": "^20.8.10",
+    "body-parser": "^1.20.2",
     "cookie-session": "^2.0.0",
     "express": "^4.18.2",
-    "nodemon": "^2.0.18",
     "reflect-metadata": "^0.1.13"
+  },
+  "lint-staged": {
+    "src/**/*.{jsx,js,ts,tsx}": "eslint --fix",
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
+  "volta": {
+    "node": "20.9.0"
   }
 }
