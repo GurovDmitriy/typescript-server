@@ -1,6 +1,5 @@
-import { NextFunction, Request, Response } from "express"
-import { get, controller, use, post, bodyValidator } from "./decorators"
-import { router } from "../routes/loginRoute"
+import { type Request, type Response } from "express"
+import { bodyValidator, controller, get, post } from "./decorators"
 
 export interface RequestWithBody extends Request {
   body: {
@@ -9,7 +8,7 @@ export interface RequestWithBody extends Request {
 }
 
 @controller("/auth")
-class LoginController {
+export default class LoginController {
   @get("/login")
   getLogin(req: Request, res: Response): void {
     res.send(`

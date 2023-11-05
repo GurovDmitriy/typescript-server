@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express"
+import { NextFunction, type Request, type Response } from "express"
 import { controller, get, use } from "./decorators"
 
 function requireAuth(req: Request, res: Response, next: NextFunction): void {
@@ -17,7 +17,7 @@ function requireAuth(req: Request, res: Response, next: NextFunction): void {
 }
 
 @controller("")
-export class RootController {
+export default class RootController {
   @get("/")
   getRoot(req: Request, res: Response) {
     if (req?.session?.loggedIn) {

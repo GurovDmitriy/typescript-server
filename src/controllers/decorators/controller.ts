@@ -2,7 +2,12 @@ import "reflect-metadata"
 import { RouterApp } from "../../RouterApp"
 import { Methods } from "./Methods"
 import { MetadataKeys } from "./MetadataKeys"
-import { NextFunction, RequestHandler, Response, Request } from "express"
+import {
+  NextFunction,
+  RequestHandler,
+  type Response,
+  type Request,
+} from "express"
 
 function bodyValidators(keys: string[]): RequestHandler {
   return function (req: Request, res: Response, next: NextFunction) {
@@ -23,9 +28,7 @@ function bodyValidators(keys: string[]): RequestHandler {
 }
 
 export function controller(routePrefix: string) {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  return function (target: Function) {
-    console.log(target)
+  return function (target: { new () }) {
     const router = RouterApp.instance
 
     for (const key in target.prototype) {
@@ -34,7 +37,7 @@ export function controller(routePrefix: string) {
       const method: Methods = Reflect.getMetadata(
         MetadataKeys.method,
         target.prototype,
-        key
+        key,
       )
 
       const middlewares =
@@ -51,7 +54,7 @@ export function controller(routePrefix: string) {
           `${routePrefix}${path}`,
           ...middlewares,
           validator,
-          routerHandler
+          routerHandler,
         )
       }
     }
